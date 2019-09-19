@@ -1,4 +1,4 @@
-package com.lbt.community_stu.community_stu.controller;
+package com.lbt.community_stu.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

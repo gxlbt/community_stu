@@ -1,4 +1,4 @@
-package com.lbt.community_stu.community_stu.dto;
+package com.lbt.community_stu.dto;
 
 import lombok.Data;
 

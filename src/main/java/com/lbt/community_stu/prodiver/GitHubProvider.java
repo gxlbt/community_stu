@@ -1,8 +1,8 @@
-package com.lbt.community_stu.community_stu.prodiver;
+package com.lbt.community_stu.prodiver;
 
 import com.alibaba.fastjson.JSON;
-import com.lbt.community_stu.community_stu.dto.AccessTokenDTO;
-import com.lbt.community_stu.community_stu.dto.GitHubUser;
+import com.lbt.community_stu.dto.AccessTokenDTO;
+import com.lbt.community_stu.dto.GitHubUser;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;

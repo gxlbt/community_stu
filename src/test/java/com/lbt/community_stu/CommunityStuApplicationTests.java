@@ -1,4 +1,4 @@
-package com.lbt.community_stu.community_stu;
+package com.lbt.community_stu;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
