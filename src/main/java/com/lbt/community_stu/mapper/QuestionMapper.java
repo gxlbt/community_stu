@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * Created by lbt on 2019/9/19 9:22
  */
@@ -17,4 +19,7 @@ public interface QuestionMapper {
             "values(#{title},#{description},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag}," +
             "#{gmtCreate},#{gmtModified})")
     public void createQuestion(Question question);
+
+    @Select("select * from question")
+    List<Question> list();
 }

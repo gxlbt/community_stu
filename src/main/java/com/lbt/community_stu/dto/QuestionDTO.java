@@ -1,20 +1,22 @@
-package com.lbt.community_stu.model;
+package com.lbt.community_stu.dto;
 
+import com.lbt.community_stu.model.User;
 import lombok.Data;
 
 /**
- * Created by lbt on 2019/9/20 10:18
+ * Created by lbt on 2019/9/21 18:17
  */
 @Data
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
-    private Integer creator;
+    private String creator;
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
     private String tag;
     private Long gmtCreate;
     private Long gmtModified;
+    private User user;
 }
