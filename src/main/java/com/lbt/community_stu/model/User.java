@@ -14,4 +14,5 @@ public class User {
     private Long gmtCreate;     //创建时间
     private Long gmtModified;   //修改时间
     private String bio;     //说明
+    private String avatarUrl;
 }
