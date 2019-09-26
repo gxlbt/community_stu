@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">码匠社区</a>
+            <a class="navbar-brand" href="http://localhost:8887">码匠社区</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充（必填，请参照右侧提示）:</label>
-                    <textarea name="description" th:value="${description}" id="description" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea name="description" th:text="${description}" id="description" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
