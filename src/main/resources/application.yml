@@ -1,0 +1,26 @@
+server:
+  port: 8887
+
+github:
+  client:
+    id: Iv1.ca6f96300dc21cbd
+    secret: ee8b4875962983f66996cfee05004817badd2d79
+  redirect:
+    uri: http://localhost:8887/callback
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mappers/*Mapper.xml
+  type-aliases-package: com.lbt.community_stu.model
+  configuration:
+    map-underscore-to-camel-case: true
+#showSql
+logging:
+  level:
+    com.lbt.community_stu.dao: debug
+

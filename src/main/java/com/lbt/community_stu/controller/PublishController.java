@@ -1,7 +1,7 @@
 package com.lbt.community_stu.controller;
 
-import com.lbt.community_stu.mapper.QuestionMapper;
-import com.lbt.community_stu.mapper.UserMapper;
+import com.lbt.community_stu.dao.QuestionDao;
+import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.model.Question;
 import com.lbt.community_stu.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublishController {
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionDao questionDao;
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
     @GetMapping("/publish")
     public String publish(){
         return "publish";
@@ -55,7 +55,7 @@ public class PublishController {
             for (Cookie cookie : cookies) {
                 if ("token".equals(cookie.getName())) {
                     String token = cookie.getValue();
-                    user = userMapper.findUserByToken(token);
+                    user = userDao.findUserByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }
@@ -74,7 +74,7 @@ public class PublishController {
         question.setTag(tag);
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
-        questionMapper.createQuestion(question);
+        questionDao.createQuestion(question);
         return "redirect:/";
     }
 }

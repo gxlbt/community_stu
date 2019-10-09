@@ -1,7 +1,8 @@
 package com.lbt.community_stu.controller;
 
+import com.lbt.community_stu.dto.PaginationDTO;
 import com.lbt.community_stu.dto.QuestionDTO;
-import com.lbt.community_stu.mapper.UserMapper;
+import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.model.User;
 import com.lbt.community_stu.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,19 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
     @Autowired
     private QuestionService questionService;
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model){
+    public String index(HttpServletRequest request, Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "2") Integer size){
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0){
             for (Cookie cookie : cookies) {
                 if ("token".equals(cookie.getName())){
                     String token = cookie.getValue();
-                    User user = userMapper.findUserByToken(token);
+                    User user = userDao.findUserByToken(token);
                     if (user != null){
                         request.getSession().setAttribute("user",user);
                     }
@@ -38,8 +41,8 @@ public class IndexController {
                 }
             }
         }
-        List<QuestionDTO> questionDTOList = questionService.list();
-        model.addAttribute("questions",questionDTOList);
+        PaginationDTO pagination = questionService.list(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 }

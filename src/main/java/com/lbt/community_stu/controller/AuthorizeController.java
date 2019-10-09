@@ -2,7 +2,7 @@ package com.lbt.community_stu.controller;
 
 import com.lbt.community_stu.dto.AccessTokenDTO;
 import com.lbt.community_stu.dto.GitHubUser;
-import com.lbt.community_stu.mapper.UserMapper;
+import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.model.User;
 import com.lbt.community_stu.prodiver.GitHubProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class AuthorizeController {
     private String redirectUri;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
     @GetMapping("/callback")
     public String callback(@RequestParam("code")String code,
                            @RequestParam("state")String state,
@@ -59,7 +59,7 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
-            userMapper.insert(user);
+            userDao.insert(user);
             Cookie cookie = new Cookie("token",token);
             response.addCookie(cookie);
             return "redirect:/";
