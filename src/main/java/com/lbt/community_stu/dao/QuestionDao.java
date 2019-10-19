@@ -19,4 +19,8 @@ public interface QuestionDao {
     List<Question> list(@Param("page") Integer page, @Param("size") Integer size);
 
     Integer count();
+
+    Integer countByCreator(@Param("userId")Integer userId);
+
+    List<Question> listByCreator(@Param("userId") Integer userId, @Param("page") Integer page, @Param("size") Integer size);
 }

@@ -17,6 +17,14 @@
         select count(1) from question
     </select>
 
+    <select id="countByCreator" resultType="Integer">
+        select count(1) from question where creator=#{userId}
+    </select>
+
+    <select id="listByCreator" resultMap="questionMap">
+        select * from question where creator=#{userId} limit #{page},#{size}
+    </select>
+
     <resultMap id="questionMap" type="Question">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
