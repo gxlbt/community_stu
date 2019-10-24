@@ -25,6 +25,10 @@
         select * from question where creator=#{userId} limit #{page},#{size}
     </select>
 
+    <select id="getQuestionById" resultMap="questionMap">
+        select * from question where id=#{id}
+    </select>
+
     <resultMap id="questionMap" type="Question">
         <id column="id" property="id"/>
         <result column="title" property="title"/>

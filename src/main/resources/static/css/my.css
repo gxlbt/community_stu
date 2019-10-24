@@ -32,3 +32,8 @@ body {
 .profile .section {
     margin-top: 15px;
 }
+.text-color {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+}
