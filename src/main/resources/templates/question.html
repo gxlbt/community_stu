@@ -25,7 +25,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
 
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a th:href="@{'/publish/'+${question.id}}" class="text-color">
+            <a th:href="@{'/publish/'+${question.id}}" class="text-color" th:if="${session.user != null && session.user.id == question.creator}">
                 <span class="glyphicon glyphicon-pencil">编辑</span>
             </a>
         </div>

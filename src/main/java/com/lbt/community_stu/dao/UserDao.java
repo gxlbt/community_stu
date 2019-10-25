@@ -14,4 +14,8 @@ public interface UserDao {
     User findUserByToken(String token);
 
     User findUserById(Integer creator);
+
+    User findUserByAccountId(String accountId);
+
+    void update(User user);
 }

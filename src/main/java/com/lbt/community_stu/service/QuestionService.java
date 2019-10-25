@@ -90,8 +90,8 @@ public class QuestionService {
     public QuestionDTO getQuestionById(Integer id) {
         Question question = questionDao.getQuestionById(id);
         QuestionDTO questionDTO = new QuestionDTO();
-        User user = userDao.findUserById(question.getCreator());
         BeanUtils.copyProperties(question, questionDTO);
+        User user = userDao.findUserById(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
