@@ -25,4 +25,6 @@ public interface QuestionDao {
     List<Question> listByCreator(@Param("userId") Integer userId, @Param("page") Integer page, @Param("size") Integer size);
 
     Question getQuestionById(@Param("id") Integer id);
+
+    void update(Question question);
 }
