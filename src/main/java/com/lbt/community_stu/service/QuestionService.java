@@ -1,11 +1,13 @@
 package com.lbt.community_stu.service;
 
+import com.lbt.community_stu.dao.QuestionMapper;
+import com.lbt.community_stu.dao.UserMapper;
 import com.lbt.community_stu.dto.PaginationDTO;
 import com.lbt.community_stu.dto.QuestionDTO;
-import com.lbt.community_stu.dao.QuestionDao;
-import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.model.Question;
+import com.lbt.community_stu.model.QuestionExample;
 import com.lbt.community_stu.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,14 @@ import java.util.List;
 @Service
 public class QuestionService {
     @Autowired
-    private QuestionDao questionDao;
+    private QuestionMapper questionMapper;
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = questionDao.count();
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         if (totalCount % size == 0){
             totalPage = totalCount / size;
         } else {
@@ -40,12 +42,12 @@ public class QuestionService {
         }
         paginationDTO.setPagination(totalPage,page);
         Integer offset = page < 1 ? 0 : size * (page - 1);
-        List<Question> questionList = questionDao.list(offset,size);
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         if (questionList != null && questionList.size() > 0) {
             for (Question question : questionList) {
                 QuestionDTO questionDTO = new QuestionDTO();
-                User user = userDao.findUserById(question.getCreator());
+                User user = userMapper.selectByPrimaryKey(question.getCreator());
                 BeanUtils.copyProperties(question, questionDTO);
                 questionDTO.setUser(user);
                 questionDTOList.add(questionDTO);
@@ -58,7 +60,10 @@ public class QuestionService {
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = questionDao.countByCreator(userId);
+        //Integer totalCount = questionMapper.countByCreator(userId);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().andCreatorEqualTo(userId);
+        Integer totalCount = (int)questionMapper.countByExample(example);
         if (totalCount % size == 0){
             totalPage = totalCount / size;
         } else {
@@ -72,12 +77,15 @@ public class QuestionService {
         }
         paginationDTO.setPagination(totalPage,page);
         Integer offset = page < 1 ? 0 : size * (page - 1);
-        List<Question> questionList = questionDao.listByCreator(userId,offset,size);
+        //List<Question> questionList = questionDao.listByCreator(userId,offset,size);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(userId);
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample,new RowBounds(offset,size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         if (questionList != null && questionList.size() > 0) {
             for (Question question : questionList) {
                 QuestionDTO questionDTO = new QuestionDTO();
-                User user = userDao.findUserById(question.getCreator());
+                User user = userMapper.selectByPrimaryKey(question.getCreator());
                 BeanUtils.copyProperties(question, questionDTO);
                 questionDTO.setUser(user);
                 questionDTOList.add(questionDTO);
@@ -88,10 +96,10 @@ public class QuestionService {
     }
 
     public QuestionDTO getQuestionById(Integer id) {
-        Question question = questionDao.getQuestionById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userDao.findUserById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
@@ -101,11 +109,18 @@ public class QuestionService {
             //插入
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionDao.createQuestion(question);
+            questionMapper.insert(question);
         }else {
             //更新
-            question.setGmtModified(System.currentTimeMillis());
-            questionDao.update(question);
+            Question upQuestion = new Question();
+            upQuestion.setTitle(question.getTitle());
+            upQuestion.setDescription(question.getDescription());
+            upQuestion.setTag(question.getTag());
+            upQuestion.setGmtModified(System.currentTimeMillis());
+            QuestionExample example = new QuestionExample();
+            example.createCriteria().andIdEqualTo(question.getId());
+            questionMapper.updateByExampleSelective(upQuestion,example);
+            //questionDao.update(question);
         }
     }
 }

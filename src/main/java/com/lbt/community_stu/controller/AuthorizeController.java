@@ -2,7 +2,6 @@ package com.lbt.community_stu.controller;
 
 import com.lbt.community_stu.dto.AccessTokenDTO;
 import com.lbt.community_stu.dto.GitHubUser;
-import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.model.User;
 import com.lbt.community_stu.prodiver.GitHubProvider;
 import com.lbt.community_stu.service.UserService;

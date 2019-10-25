@@ -1,6 +1,5 @@
 package com.lbt.community_stu.controller;
 
-import com.lbt.community_stu.dao.UserDao;
 import com.lbt.community_stu.dto.PaginationDTO;
 import com.lbt.community_stu.model.User;
 import com.lbt.community_stu.service.QuestionService;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -19,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class ProfileController {
-    @Autowired
-    private UserDao userDao;
     @Autowired
     private QuestionService questionService;
 

@@ -1,6 +1,5 @@
 package com.lbt.community_stu.controller;
 
-import com.lbt.community_stu.dao.QuestionDao;
 import com.lbt.community_stu.dto.QuestionDTO;
 import com.lbt.community_stu.model.Question;
 import com.lbt.community_stu.model.User;
